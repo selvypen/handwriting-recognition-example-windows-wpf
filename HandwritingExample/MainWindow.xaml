@@ -1,0 +1,41 @@
+﻿<Window x:Class="HandwritingExample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HandwritingExample"
+        mc:Ignorable="d"
+        Title="Handwriting Recognition Example" Height="480" Width="800" MinHeight="360" MinWidth="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO"/>
+            <RowDefinition Height="AUTO"/>
+            <RowDefinition Height="AUTO"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <RadioButton x:Name="koreanEnglish" Content="Korean + English" Click="KoreanEnglish_Click" IsChecked="True" Margin="10"/>
+            <RadioButton x:Name="chinese" Content="Chinese" Click="Chinese_Click" Margin="10"/>
+            <RadioButton x:Name="japanese" Content="Japanese" Click="Japanese_Click" Margin="10"/>
+            <TextBlock x:Name="version" Text="SDK Version : " Margin="10" Foreground="Gray"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <Button x:Name="recognizeButton" Content="Recognize" Click="RecognizeButton_Click" Width="180" Height="35" Margin="10, 0, 0, 10"/>
+            <Button x:Name="clearButton" Content="Clear" Click="ClearButton_Click" Width="180" Height="35" Margin="10, 0, 0, 10"/>
+        </StackPanel>
+        <TextBlock x:Name="candidates" Grid.Row="2" Text="No Result" Foreground="LightGray" Background="Black" Visibility="Collapsed" Margin="10, 0, 10, 10"/>
+        <Border BorderThickness="1" BorderBrush="Gray" Grid.Row="3" Margin="10, 0, 10, 10">
+            <Canvas x:Name="writingCanvas" MouseDown="WritingCanvas_MouseDown" MouseMove="WritingCanvas_MouseMove" MouseUp="WritingCanvas_MouseUp"
+                    SizeChanged="writingCanvas_SizeChanged">
+                <Canvas.Background>
+                    <SolidColorBrush Color="LightGoldenrodYellow"/>
+                </Canvas.Background>
+                <TextBlock x:Name="guideText" Text="Write here." Foreground="LightGray" FontSize="18"/>
+            </Canvas>
+        </Border>
+    </Grid>
+</Window>
