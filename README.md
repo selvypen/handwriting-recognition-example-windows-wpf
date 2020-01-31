@@ -12,7 +12,7 @@ This example app shows how to recognize handwritten text using the *Selvy Handwr
 1. Place *libdhwr-hwfs.dll* in `HandwritingExample/bin/Debug|Release/lib` (optional: use only Chinese)
 1. Place *.hdb files in `HandwritingExample/bin/Debug|Release/hdb`
 1. Place a License file in `HandwritingExample/bin/Debug|Release/license_key`
-1. Open HandwritingExample.sln and build this project in Microsft Visual Studio
+1. Open HandwritingExample.sln and build this project in Microsoft Visual Studio
 
 ## Documentation
 The *Selvy Handwriting SDK* API documentation is available on [Selvy Handwriting website](http://handwriting.selvasai.com)
