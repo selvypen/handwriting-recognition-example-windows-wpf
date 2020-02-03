@@ -1,4 +1,13 @@
-﻿using System;
+﻿/*!
+ *  @brief Handwriting Recognition Example
+ *  @date 2020/02/03
+ *  @file MainWindow.xaml.cs
+ *  @author SELVAS AI
+ *
+ *  Copyright 2020. SELVAS AI Inc. All Rights Reserved.
+ */
+
+using System;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
