@@ -1,4 +1,4 @@
-﻿/*!
+/*!
  *  @brief Handwriting APIs
  *  @date 2019/12/11
  *  @file Hwr.cs
@@ -9,6 +9,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Selvasai
 {
@@ -169,6 +170,7 @@ namespace Selvasai
         public const int DLANG_AFRIKAANS = 57;
         public const int DLANG_NYNORSK = 58;
         public const int DLANG_DUTCH_BE = 59;
+        public const int DLANG_AZERBAIJANI = 60;
 
         // CJK
         public const int DLANG_KOREAN = 101;
@@ -244,7 +246,7 @@ namespace Selvasai
         /// </summary>
         /// <param name="keyPath">[in] 파일명을 포함한 License key 파일의 경로</param>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRCreate")]
+        [DllImport("libdhwr", EntryPoint = "DHWRCreate")]
         public static extern int Create(String keyPath);
 
         /// <summary>
@@ -252,7 +254,7 @@ namespace Selvasai
         /// </summary>
         /// <param name="setting">[in] setting 설정이 완료된 Setting Object</param>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRSetAttribute")]
+        [DllImport("libdhwr", EntryPoint = "DHWRSetAttribute")]
         public static extern int SetAttribute(IntPtr setting);
 
         /// <summary>
@@ -261,14 +263,14 @@ namespace Selvasai
         /// <param name="ink">[in] ink 좌표가 입력된 Ink Object</param>
         /// <param name="result">[out] 인식된 결과가 저장된 Result Object</param>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRecognize")]
+        [DllImport("libdhwr", EntryPoint = "DHWRecognize")]
         public static extern int Recognize(IntPtr ink, IntPtr result);
 
         /// <summary>
         /// 인식엔진의 인스턴스를 소멸시킴
         /// </summary>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRClose")]
+        [DllImport("libdhwr", EntryPoint = "DHWRClose")]
         public static extern int Close();
 
         // Optional APIs -------------------------------------------------------
@@ -277,7 +279,7 @@ namespace Selvasai
         /// </summary>
         /// <param name="path">[in] path 리소스 경로</param>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRSetExternalResourcePath")]
+        [DllImport("libdhwr", EntryPoint = "DHWRSetExternalResourcePath")]
         public static extern int SetExternalResourcePath(String path);
 
         /// <summary>
@@ -285,7 +287,7 @@ namespace Selvasai
         /// </summary>
         /// <param name="path">[in] path 외부라이브러리의 경로</param>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRSetExternalLibraryPath")]
+        [DllImport("libdhwr", EntryPoint = "DHWRSetExternalLibraryPath")]
         public static extern int SetExternalLibraryPath(String path);
 
         /// <summary>
@@ -294,7 +296,7 @@ namespace Selvasai
         /// <param name="type">[in] 파라미터 타입</param>
         /// <param name="param">[out] 특정 파리미터 타입의 포인터</param>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRGetParam")]
+        [DllImport("libdhwr", EntryPoint = "DHWRGetParam")]
         public static extern int GetParam(int type, [In, Out] ref int param);
 
         /// <summary>
@@ -303,7 +305,7 @@ namespace Selvasai
         /// <param name="type">[in] 파라미터 타입</param>
         /// <param name="param">[in] 특정 파리미터 타입의 포인터</param>
         /// <returns></returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRSetParam")]
+        [DllImport("libdhwr", EntryPoint = "DHWRSetParam")]
         public static extern int SetParam(int type, [In, Out] ref int param);
 
         /// <summary>
@@ -311,7 +313,7 @@ namespace Selvasai
         /// </summary>
         /// <param name="revision">[out] 엔진 빌드넘버</param>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRGetRevision")]
+        [DllImport("libdhwr", EntryPoint = "DHWRGetRevision")]
         public static extern int GetRevisionPtr(IntPtr[] revision);
 
         /// <summary>
@@ -330,7 +332,7 @@ namespace Selvasai
         /// </summary>
         /// <param name="due_date">[out] 년월일을 나타내는 8자리의 integer 값 (ex 20161206)</param>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRGetDueDate")]
+        [DllImport("libdhwr", EntryPoint = "DHWRGetDueDate")]
         public static extern int GetDueDate([In, Out] ref int due_date);
 
         // SettingObject APIs --------------------------------------------------
@@ -338,14 +340,14 @@ namespace Selvasai
         /// 설정 오브젝트를 생성한다
         /// </summary>
         /// <returns>설정 오브젝트</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRCreateSettingObject")]
+        [DllImport("libdhwr", EntryPoint = "DHWRCreateSettingObject")]
         public static extern IntPtr CreateSettingObject();
 
         /// <summary>
         /// 설정 오브젝트를 제거한다
         /// </summary>
         /// <param name="setting">[in] 설정 오브젝트</param>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRDestroySettingObject")]
+        [DllImport("libdhwr", EntryPoint = "DHWRDestroySettingObject")]
         public static extern void DestroySettingObject(IntPtr setting);
 
         /// <summary>
@@ -354,7 +356,7 @@ namespace Selvasai
         /// <param name="setting"> [in] 설정 오브젝트</param>
         /// <param name="mode">[in] 인식 모드</param>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRSetRecognitionMode")]
+        [DllImport("libdhwr", EntryPoint = "DHWRSetRecognitionMode")]
         public static extern int SetRecognitionMode(IntPtr setting, int mode);
 
         /// <summary>
@@ -363,7 +365,7 @@ namespace Selvasai
         /// <param name="setting">[in] 설정 오브젝트</param>
         /// <param name="size">[in] 후보수</param>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRSetCandidateSize")]
+        [DllImport("libdhwr", EntryPoint = "DHWRSetCandidateSize")]
         public static extern int SetCandidateSize(IntPtr setting, int size);
 
         /// <summary>
@@ -373,7 +375,7 @@ namespace Selvasai
         /// <param name="language">[in] 언어 값</param>
         /// <param name="option">[in] 따른 옵션</param>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRAddLanguage")]
+        [DllImport("libdhwr", EntryPoint = "DHWRAddLanguage")]
         public static extern int AddLanguage(IntPtr setting, int language, int option);
 
         /// <summary>
@@ -382,7 +384,7 @@ namespace Selvasai
         /// <param name="setting">[in] 설정 오브젝트</param>
         /// <param name="size">[out] 크기</param>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRGetLanguageSize")]
+        [DllImport("libdhwr", EntryPoint = "DHWRGetLanguageSize")]
         public static extern int GetLanguageSize(IntPtr setting, [In, Out] ref int size);
 
         /// <summary>
@@ -390,7 +392,7 @@ namespace Selvasai
         /// </summary>
         /// <param name="setting">[in] 설정 오브젝트</param>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRClearLanguage")]
+        [DllImport("libdhwr", EntryPoint = "DHWRClearLanguage")]
         public static extern int ClearLanguage(IntPtr setting);
 
         /// <summary>
@@ -399,7 +401,7 @@ namespace Selvasai
         /// <param name="setting">[in] 설정 오브젝트</param>
         /// <param name="charset">[in] 인식할 심볼의 리스트</param>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRSetUserCharSet")]
+        [DllImport("libdhwr", EntryPoint = "DHWRSetUserCharSet")]
         public static extern int SetUserCharSet(IntPtr setting, [In] ushort[] charset);
 
         // InkObject APIs ------------------------------------------------------
@@ -407,14 +409,14 @@ namespace Selvasai
         /// 잉크 오브젝트를 생성한다
         /// </summary>
         /// <returns>잉크 오브젝트</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRCreateInkObject")]
+        [DllImport("libdhwr", EntryPoint = "DHWRCreateInkObject")]
         public static extern IntPtr CreateInkObject();
 
         /// <summary>
         /// 잉크 오브젝트를 제거한다
         /// </summary>
         /// <param name="ink">[in] 잉크 오브젝트</param>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRDestroyInkObject")]
+        [DllImport("libdhwr", EntryPoint = "DHWRDestroyInkObject")]
         public static extern void DestroyInkObject(IntPtr ink);
 
         /// <summary>
@@ -424,7 +426,7 @@ namespace Selvasai
         /// <param name="x">[in] x좌표</param>
         /// <param name="y">[in] y좌표</param>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRAddPoint")]
+        [DllImport("libdhwr", EntryPoint = "DHWRAddPoint")]
         public static extern int AddPoint(IntPtr ink, int x, int y);
 
         /// <summary>
@@ -432,7 +434,7 @@ namespace Selvasai
         /// </summary>
         /// <param name="ink">[in] 잉크 오브젝트</param>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWREndStroke")]
+        [DllImport("libdhwr", EntryPoint = "DHWREndStroke")]
         public static extern int EndStroke(IntPtr ink);
 
         /// <summary>
@@ -440,7 +442,7 @@ namespace Selvasai
         /// </summary>
         /// <param name="ink">[in] 잉크 오브젝트</param>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRInkClear")]
+        [DllImport("libdhwr", EntryPoint = "DHWRInkClear")]
         public static extern int InkClear(IntPtr ink);
 
         /// <summary>
@@ -451,7 +453,7 @@ namespace Selvasai
         /// <param name="x">[out] 해당 잉크의 x좌표값</param>
         /// <param name="y">[out] 해당 잉크의 y좌표값</param>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRGetInkPoint")]
+        [DllImport("libdhwr", EntryPoint = "DHWRGetInkPoint")]
         public static extern int GetInkPoint(IntPtr ink, int index, [In, Out] ref int x, [In, Out] ref int y);
 
         /// <summary>
@@ -460,7 +462,7 @@ namespace Selvasai
         /// <param name="ink">[in] 잉크 오브젝트</param>
         /// <param name="count">[out] 잉크 카운트</param>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRGetInkCount")]
+        [DllImport("libdhwr", EntryPoint = "DHWRGetInkCount")]
         public static extern int GetInkCount(IntPtr ink, [In, Out] ref int count);
 
         // ResultObject APIs ---------------------------------------------------
@@ -468,14 +470,14 @@ namespace Selvasai
         /// 결과 오브젝트를 생성한다
         /// </summary>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRCreateResultObject")]
+        [DllImport("libdhwr", EntryPoint = "DHWRCreateResultObject")]
         public static extern IntPtr CreateResultObject();
 
         /// <summary>
         /// 결과 오브젝트를 제거한다
         /// </summary>
         /// <param name="result">[in] 결과 오브젝트</param>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRDestroyResultObject")]
+        [DllImport("libdhwr", EntryPoint = "DHWRDestroyResultObject")]
         public static extern void DestroyResultObject(IntPtr result);
 
         /// <summary>
@@ -483,7 +485,7 @@ namespace Selvasai
         /// </summary>
         /// <param name="ink">[in] 결과 오브젝트</param>
         /// <returns>Line Size</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRGetLineSize")]
+        [DllImport("libdhwr", EntryPoint = "DHWRGetLineSize")]
         public static extern int GetLineSize(IntPtr ink);
 
         /// <summary>
@@ -492,7 +494,7 @@ namespace Selvasai
         /// <param name="result">[in] 결과 오브젝트</param>
         /// <param name="index">[in] 라인 인덱스</param>
         /// <returns>라인 결과</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRGetLine")]
+        [DllImport("libdhwr", EntryPoint = "DHWRGetLine")]
         public static extern IntPtr GetLine(IntPtr result, int index);
 
         /// <summary>
@@ -500,7 +502,7 @@ namespace Selvasai
         /// </summary>
         /// <param name="line">[in] 라인 결과 값</param>
         /// <returns>Block Size</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRGetBlockSize")]
+        [DllImport("libdhwr", EntryPoint = "DHWRGetBlockSize")]
         public static extern int GetBlockSize(IntPtr line);
 
         /// <summary>
@@ -509,7 +511,7 @@ namespace Selvasai
         /// <param name="line">[in] 라인</param>
         /// <param name="index">[in] 블럭 인덱스</param>
         /// <returns>블럭 결과</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRGetBlock")]
+        [DllImport("libdhwr", EntryPoint = "DHWRGetBlock")]
         public static extern IntPtr GetBlock(IntPtr line, int index);
 
         /// <summary>
@@ -517,7 +519,7 @@ namespace Selvasai
         /// </summary>
         /// <param name="block">[in] 블럭 결과 값</param>
         /// <returns>Stroke Size</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRGetStrokeSize")]
+        [DllImport("libdhwr", EntryPoint = "DHWRGetStrokeSize")]
         public static extern int GetStrokeSize(IntPtr block);
 
         /// <summary>
@@ -527,7 +529,7 @@ namespace Selvasai
         /// <param name="indices">[out] 인덱스 포인터</param>
         /// <param name="size">[in] 인덱스 포인터 사이즈</param>
         /// <returns>에러 코드 값</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRGetStrokeIndices")]
+        [DllImport("libdhwr", EntryPoint = "DHWRGetStrokeIndices")]
         public static extern int GetStrokeIndices(IntPtr block, [In, Out] ref int indices, int size);
 
         /// <summary>
@@ -535,7 +537,7 @@ namespace Selvasai
         /// </summary>
         /// <param name="block">[in] 블럭 결과 값</param>
         /// <returns>Candidate Size</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRGetCandidateSize")]
+        [DllImport("libdhwr", EntryPoint = "DHWRGetCandidateSize")]
         public static extern int GetCandidateSize(IntPtr block);
 
         /// <summary>
@@ -545,7 +547,7 @@ namespace Selvasai
         /// <param name="index">[in] 후보 인덱스</param>
         /// <param name="length">[out] 인식후보 문자열 크기</param>
         /// <returns>후보문자의 포인터</returns>
-        [DllImport("libdhwr.dll", EntryPoint = "DHWRGetCandidate")]
+        [DllImport("libdhwr", EntryPoint = "DHWRGetCandidate")]
         public static extern IntPtr GetCandidatePtr(IntPtr block, int index, [In, Out] ref int length);
 
         /// <summary>
@@ -557,7 +559,28 @@ namespace Selvasai
         /// <returns>후보문자</returns>
         public static String GetCandidate(IntPtr block, int index, [In, Out] ref int length)
         {
-            return Marshal.PtrToStringUni(GetCandidatePtr(block, index, ref length));
+            IntPtr candidatePtr = Hwr.GetCandidatePtr(block, index, ref length);
+            StringBuilder candidates = new StringBuilder();
+
+            if (length > 0)
+            {
+                String os = System.Environment.OSVersion.Platform.ToString();
+                if (os.Contains("Win"))
+                {
+                    candidates.Append(Marshal.PtrToStringUni(candidatePtr, length));
+                }
+                else
+                {
+                    int[] buffers = new int[length];
+                    Marshal.Copy(candidatePtr, buffers, 0, length);
+                    foreach (uint buf in buffers)
+                    {
+                        candidates.Append(Convert.ToChar(buf));
+                    }
+                }
+            }
+
+            return candidates.ToString();
         }
     }
 }
